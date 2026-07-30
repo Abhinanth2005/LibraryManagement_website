@@ -28,7 +28,9 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = [
-    "*"
+    "localhost",
+    "127.0.0.1",
+    "librix-api.onrender.com",
 ]
 
 
@@ -76,6 +78,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://librarymanagement-website.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -84,9 +87,10 @@ SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
+    "https://librarymanagement-website.onrender.com",
 ]
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 MIDDLEWARE = [
