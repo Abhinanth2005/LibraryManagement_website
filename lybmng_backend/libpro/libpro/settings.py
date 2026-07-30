@@ -20,12 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gk-kwq8w-!xjzce--jhmd*n()p=dll1ky=b3s_id(2w3_i7(^#'
+from decouple import config
+
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -44,10 +49,10 @@ INSTALLED_APPS = [
 ]
 
 import stripe
-from decouple import config
+
 
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
-STRIPE_PUBLISHABLE_KEY = "pk_test_51TyYZkA9C4a3CLEu5kUNB5TNofSVDohZvrOYDd1OzYcHHiHOsT4lpfOAwTzuf91FZfzYggz8QcC0JgHVQgiPsnI700YxSFoXiv"
+STRIPE_PUBLISHABLE_KEY = config("STRIPE_PUBLISHABLE_KEY")
 
 stripe.api_key = STRIPE_SECRET_KEY
 
@@ -88,6 +93,7 @@ CSRF_COOKIE_SECURE = False
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -119,15 +125,22 @@ WSGI_APPLICATION = 'libpro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "library_db",
+#         "USER": "postgres",
+#         "PASSWORD": "root123",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
+import dj_database_url
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "library_db",
-        "USER": "postgres",
-        "PASSWORD": "root123",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL")
+    )
 }
 
 
@@ -155,7 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 
@@ -169,3 +182,9 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
