@@ -479,8 +479,13 @@ def my_purchased_books(request):
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
-@login_required
 def current_user(request):
+    if not request.user.is_authenticated:
+        return JsonResponse(
+            {"detail": "Authentication required"},
+            status=401
+        )
+
     return JsonResponse({
         "id": request.user.id,
         "username": request.user.username,
