@@ -43,21 +43,47 @@ INSTALLED_APPS = [
     'django_filters',
 ]
 
+import stripe
+from decouple import config
+
+STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
+STRIPE_PUBLISHABLE_KEY = "pk_test_51TyYZkA9C4a3CLEu5kUNB5TNofSVDohZvrOYDd1OzYcHHiHOsT4lpfOAwTzuf91FZfzYggz8QcC0JgHVQgiPsnI700YxSFoXiv"
+
+stripe.api_key = STRIPE_SECRET_KEY
+
+# REST_FRAMEWORK = {
+
+#     "DEFAULT_FILTER_BACKENDS": [
+#         "django_filters.rest_framework.DjangoFilterBackend",
+#         "rest_framework.filters.SearchFilter",
+#         "rest_framework.filters.OrderingFilter",
+#     ],
+
+#     "DEFAULT_PAGINATION_CLASS":
+#         "rest_framework.pagination.PageNumberPagination",
+
+#     "PAGE_SIZE": 10,
+# }
 REST_FRAMEWORK = {
-
-    "DEFAULT_FILTER_BACKENDS": [
-        "django_filters.rest_framework.DjangoFilterBackend",
-        "rest_framework.filters.SearchFilter",
-        "rest_framework.filters.OrderingFilter",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
     ],
-
-    "DEFAULT_PAGINATION_CLASS":
-        "rest_framework.pagination.PageNumberPagination",
-
-    "PAGE_SIZE": 10,
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+]
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

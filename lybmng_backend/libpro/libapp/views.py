@@ -7,16 +7,19 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
+
+
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Book, Category, Borrow
+from .models import Book, Category, Borrow, Purchase
+from django.contrib.auth.models import User
 from .serializers import (
     BookSerializer,
     CategorySerializer,
     BorrowSerializer,
+    PurchaseSerializer,
 )
 
 
@@ -74,9 +77,25 @@ class BookViewSet(viewsets.ModelViewSet):
         "-created_at",
     ]
 
+    def get_serializer_context(self):
+     context = super().get_serializer_context()
+     context["request"] = self.request
+     return context
+
     @transaction.atomic
     @action(detail=True, methods=["post"])
     def borrow(self, request, pk=None):
+        print("USER:", request.user)
+        print("AUTH:", request.user.is_authenticated)
+
+        if not request.user.is_authenticated:
+            return Response(
+            {
+                "message": "Login required"
+            },
+            status=401
+        )
+
 
         book = self.get_object()
 
@@ -89,6 +108,22 @@ class BookViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+
+        already_borrowed = Borrow.objects.filter(
+        book=book,
+          user=request.user,
+         returned=False,
+        ).exists()
+
+        if already_borrowed:
+         return Response(
+        {
+            "success": False,
+            "message": "You have already borrowed this book."
+        },
+        status=status.HTTP_400_BAD_REQUEST,
+    )
+
         book.available -= 1
 
         if book.available == 0:
@@ -96,7 +131,11 @@ class BookViewSet(viewsets.ModelViewSet):
 
         book.save()
 
-        Borrow.objects.create(book=book)
+        # Borrow.objects.create(book=book)
+        Borrow.objects.create(
+    book=book,
+    user=request.user,
+)
 
         return Response(
             {
@@ -154,6 +193,68 @@ class BookViewSet(viewsets.ModelViewSet):
             },
             status=status.HTTP_200_OK,
         )
+    @transaction.atomic
+    @action(detail=True, methods=["post"])
+    def buy(self, request, pk=None):
+
+        if not request.user.is_authenticated:
+            return Response(
+              {
+                  "message": "Login required"
+              },
+              status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+        book = self.get_object()
+
+        already_purchased = Purchase.objects.filter(
+          book=book,
+          user=request.user,
+          ).exists()
+
+        if already_purchased:
+            return Response(
+               {
+                   "success": False,
+                   "message": "You have already purchased this book."
+               },
+               status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if book.available <= 0:
+            return Response(
+               {
+                  "success": False,
+                  "message": "Book is out of stock."
+               },
+              status=status.HTTP_400_BAD_REQUEST,
+             )
+
+        book.available -= 1
+
+        if book.available == 0:
+           book.status = "Out of Stock"
+
+        book.save()
+
+        Purchase.objects.create(
+        book=book,
+        user=request.user,
+        )
+
+        return Response(
+            {
+                "success": True,
+                "message": "Book purchased successfully.",
+                "book": {
+                    "id": book.id,
+                    "title": book.title,
+                    "price": book.price,
+                },
+            },
+            status=status.HTTP_200_OK,
+        )
+    
 
 
 from .models import Book, Category, Borrow
@@ -239,3 +340,150 @@ class DashboardAPIView(APIView):
             ]
 
         })
+
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+@api_view(["POST"])
+def login_view(request):
+
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    try:
+        user_obj = User.objects.get(email=email)
+
+    except User.DoesNotExist:
+        return Response(
+            {"message": "Invalid credentials"},
+            status=400
+        )
+
+
+    user = authenticate(
+        request,
+        username=user_obj.username,
+        password=password
+    )
+
+
+    if user is None:
+        return Response(
+            {"message": "Invalid credentials"},
+            status=400
+        )
+
+
+    login(request, user)   # <-- creates session cookie
+
+
+    return Response(
+        {
+            "message": "Login successful",
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "is_superuser": user.is_superuser,
+            }
+        }
+    )
+
+@api_view(["POST"])
+def logout_view(request):
+
+    logout(request)
+
+    return Response(
+        {
+            "message": "Logged out successfully."
+        }
+    )
+
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+
+@api_view(["POST"])
+def register_view(request):
+
+    name = request.data.get("name")
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    if User.objects.filter(email=email).exists():
+        return Response(
+            {
+                "message": "Email already exists."
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    user = User.objects.create_user(
+        username=email,
+        email=email,
+        first_name=name,
+        password=password
+    )
+
+    return Response(
+        {
+            "message": "Registration successful."
+        },
+        status=status.HTTP_201_CREATED
+    )
+
+# @api_view(["GET"])
+# def my_purchased_books(request):
+
+#     purchases = Purchase.objects.filter(
+#         user=request.user
+#     ).select_related("book")
+
+#     serializer = PurchaseSerializer(
+#         purchases,
+#         many=True,
+#         context={"request": request},
+#     )
+
+#     return Response(serializer.data)
+
+@api_view(["GET"])
+def my_purchased_books(request):
+
+    print("USER:", request.user)
+    print("AUTH:", request.user.is_authenticated)
+
+    purchases = Purchase.objects.filter(
+        user=request.user
+    )
+
+    print("COUNT:", purchases.count())
+
+    serializer = PurchaseSerializer(
+        purchases,
+        many=True,
+        context={"request": request},
+    )
+
+    return Response(serializer.data)
+
+
+
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+@login_required
+def current_user(request):
+    return JsonResponse({
+        "id": request.user.id,
+        "username": request.user.username,
+        "email": request.user.email,
+        "is_superuser": request.user.is_superuser,
+    })

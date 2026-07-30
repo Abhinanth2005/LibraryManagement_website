@@ -16,25 +16,63 @@ export default function Books() {
 
   const navigate = useNavigate()
 
+// useEffect(() => {
+//   if (!localStorage.getItem("user")) {
+//     navigate("/login", { replace: true });
+//   }
+// }, [navigate]);
+
+
+  // useEffect(() => {
+  //   getBooks().then((data) => {
+  //     setBooks(data);
+  //     setLoading(false);
+  //   });
+  // }, []);
 useEffect(() => {
-  if (!localStorage.getItem("user")) {
-    navigate("/login", { replace: true });
-  }
-}, [navigate]);
 
+    const loadBooks = async () => {
 
-  useEffect(() => {
-    getBooks().then((data) => {
-      setBooks(data);
-      setLoading(false);
-    });
-  }, []);
+        try {
 
-  const filteredBooks = books.filter((b) =>
-    b.title.toLowerCase().includes(search.toLowerCase())
-  );
+            const data = await getBooks();
+
+            console.log("API DATA:", data);
+
+            const bookData = data.results || data || [];
+
+            setBooks(bookData);
+
+        } catch (error) {
+
+            console.log(error);
+
+            setBooks([]);
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    };
+
+    loadBooks();
+
+}, []);
+
+  // const filteredBooks = books.filter((b) =>
+  //   b.title.toLowerCase().includes(search.toLowerCase())
+  // );
+ const filteredBooks = (books || []).filter((book) =>
+    book.title?.toLowerCase().includes(search.toLowerCase()) ||
+    book.author?.toLowerCase().includes(search.toLowerCase())
+);
 
   if (loading) return <Loader />;
+
+  console.log("BOOKS STATE is:", books);
+console.log("FILTERED BOOKS:", filteredBooks);
 
   return (
     <div className="container mt-4">

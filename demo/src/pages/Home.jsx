@@ -5,7 +5,7 @@ export default function Home() {
   backgroundSize: 'cover'
 }}>
       <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
-        <h1 className=" text-warning pb-3 fw-bold" style={{textShadow:'1px 1px 4px black' }}>Welcome To MyBooks!</h1>
+        <h1 className=" text-warning pb-3 fw-bold" style={{textShadow:'1px 1px 4px black' }}>Welcome To LibriX!</h1>
         <h3 className="text-white" style={{textShadow:'1px 1px 4px black' }}>Please login to continue</h3>
       </div>
     </div>

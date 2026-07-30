@@ -1,13 +1,18 @@
-import { saveToMyLibrary, hasActiveBorrow } from "../utils/libraryStorage";
+// import { saveToMyLibrary, hasActiveBorrow } from "../utils/libraryStorage";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getBooks } from "../services/bookService";
+import {
+    getBook,
+    borrowBook,
+} from "../services/bookService";
 
 
 export default function BorrowBook() {
-    const { key } = useParams();
-    const decodedKey = decodeURIComponent(key);
+    // const { key } = useParams();
+    // const decodedKey = decodeURIComponent(key);
+    const { id } = useParams();
+
     const [book, setBook] = useState(null);
     const navigate = useNavigate();
 
@@ -20,14 +25,14 @@ export default function BorrowBook() {
     const [berror, setErrorb] = useState("")
     const [bemailerror, setEmailErrorb] = useState("")
     const [bpherror, setPhErrorr] = useState("")
-    const [borrowerror, setBorrowerror] = useState("")
+    const [borrowerror, setBorrowError] = useState("")
 
 
 
 
 
 
-    const handleBorrow = (e) => {
+    const handleBorrow = async(e) => {
         e.preventDefault()
         var isValid = true;
         if (bname.trim() === "") {
@@ -62,34 +67,52 @@ export default function BorrowBook() {
             
             // form.current.reset()
 
-            const entry = {
-                bookId: book.id,
-                title: book.title,
-                author: book.author,
-                image: book.image,
-                type: "BORROWED",
-                timestamp: new Date().toISOString(),
+            // const entry = {
+            //     bookId: book.id,
+            //     title: book.title,
+            //     author: book.author,
+            //     image: book.image,
+            //     type: "BORROWED",
+            //     timestamp: new Date().toISOString(),
 
-            };
+            // };
 
 
-            const data = JSON.parse(localStorage.getItem("myLibrary")) || [];
+            // const data = JSON.parse(localStorage.getItem("myLibrary")) || [];
 
-            const alreadyBorrowed = data.some(
-                (item) =>
-                    item.bookId === book.id &&
-                    item.type === "BORROWED"
-            );
+            // const alreadyBorrowed = data.some(
+            //     (item) =>
+            //         item.bookId === book.id &&
+            //         item.type === "BORROWED"
+            // );
 
-            if (alreadyBorrowed) {
-                alert("You have already borrowed this book ");
-                return;
-            }
-            else{alert(`Book "${book.title}" Borrowed successfully!`);}
-            data.push(entry);
-            localStorage.setItem("myLibrary", JSON.stringify(data));
+            // if (alreadyBorrowed) {
+            //     alert("You have already borrowed this book ");
+            //     return;
+            // }
+            // else{alert(`Book "${book.title}" Borrowed successfully!`);}
+            // data.push(entry);
+            // localStorage.setItem("myLibrary", JSON.stringify(data));
 
-            navigate("/books");
+            // navigate("/books");
+
+
+            try {
+
+    await borrowBook(book.id);
+
+    alert("Book borrowed successfully.");
+
+    navigate("/books");
+
+} catch (error) {
+
+    alert(
+        error.response?.data?.message ||
+        "Unable to borrow the book."
+    );
+
+}
 
         }
 
@@ -105,11 +128,32 @@ export default function BorrowBook() {
 
 
 
+    // useEffect(() => {
+    //     getBooks().then(data => {
+    //         setBook(data.find(b => b.key === decodedKey));
+    //     });
+    // }, [decodedKey]);
     useEffect(() => {
-        getBooks().then(data => {
-            setBook(data.find(b => b.key === decodedKey));
-        });
-    }, [decodedKey]);
+
+    const loadBook = async () => {
+
+        try {
+
+            const data = await getBook(id);
+
+            setBook(data);
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    };
+
+    loadBook();
+
+}, [id]);
 
     if (!book) {
         return <p className="text-center mt-5">Loading!</p>;
@@ -127,7 +171,7 @@ export default function BorrowBook() {
                 <div className="d-flex justify-content-center">
                     <div>
                         <img
-                            src={book.image}
+                            src={book.cover}
                             className="card-img-top p-2"
                             style={{ height: "250px", width: "200px" }}
                         />
@@ -165,7 +209,7 @@ export default function BorrowBook() {
                             setBorrow(e.target.value);
                         }}
                     >
-                        <option value="" selected disabled> Select Borrow days
+                        <option value="" disabled> Select Borrow days
                         </option>
                         <option value="15" >15 </option>
                         <option value="30">30 </option>

@@ -10,9 +10,15 @@ export default function Footer() {
           </div>
 
           <div className="col-md-6 text-center text-md-end">
-            <small>
-              contact +91 5566889899
-            </small>
+            <a
+          href="#" className="text-white"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/contacts");
+          }}
+        >
+          Contact
+        </a>
           </div>
         </div>
       </div>
