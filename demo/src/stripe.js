@@ -1,5 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
+console.log(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const stripePromise = loadStripe(
-    "pk_test_51TyYZkA9C4a3CLEu5kUNB5TNofSVDohZvrOYDd1OzYcHHiHOsT4lpfOAwTzuf91FZfzYggz8QcC0JgHVQgiPsnI700YxSFoXiv"
+    import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+
 );

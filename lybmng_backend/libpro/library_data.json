@@ -1,0 +1,418 @@
+[
+{
+  "model": "libapp.category",
+  "pk": 1,
+  "fields": {
+    "name": "Programming"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 2,
+  "fields": {
+    "name": "Web Development"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 3,
+  "fields": {
+    "name": "Database"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 4,
+  "fields": {
+    "name": "Artificial Intelligence"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 5,
+  "fields": {
+    "name": "Mathematics"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 6,
+  "fields": {
+    "name": "Science"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 7,
+  "fields": {
+    "name": "History"
+  }
+},
+{
+  "model": "libapp.category",
+  "pk": 8,
+  "fields": {
+    "name": "Fiction"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 1,
+  "fields": {
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "description": "A beginner-friendly guide to learning Python through practical examples and hands-on projects.",
+    "publisher": "No Starch Press",
+    "published_year": 2023,
+    "category": 1,
+    "quantity": 10,
+    "available": 10,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA1335.jpg",
+    "created_at": "2026-07-22T06:48:58.802Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 2,
+  "fields": {
+    "title": "Learning React",
+    "author": "Alex Banks",
+    "description": "Learn modern React development including components, hooks, routing, and state management.",
+    "publisher": "O'Reilly Media",
+    "published_year": 2024,
+    "category": 2,
+    "quantity": 8,
+    "available": 7,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA1732.jpg",
+    "created_at": "2026-07-22T06:48:58.831Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 3,
+  "fields": {
+    "title": "Django for Beginners",
+    "author": "William Vincent",
+    "description": "A practical introduction to Django covering models, views, templates, authentication, and deployment.",
+    "publisher": "WelcomeToCode",
+    "published_year": 2022,
+    "category": 2,
+    "quantity": 6,
+    "available": 5,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA4914.jpg",
+    "created_at": "2026-07-22T06:48:58.835Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 4,
+  "fields": {
+    "title": "Flask Web Development",
+    "author": "Miguel Grinberg",
+    "description": "Build web applications using Flask with authentication, databases, REST APIs, and deployment.",
+    "publisher": "O'Reilly Media",
+    "published_year": 2018,
+    "category": 2,
+    "quantity": 7,
+    "available": 7,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA7370.jpg",
+    "created_at": "2026-07-22T06:48:58.850Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 5,
+  "fields": {
+    "title": "PostgreSQL Up and Running",
+    "author": "Regina Obe",
+    "description": "Learn PostgreSQL database administration, SQL, indexing, and performance optimization.",
+    "publisher": "O'Reilly Media",
+    "published_year": 2021,
+    "category": 3,
+    "quantity": 5,
+    "available": 5,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA5659.jpg",
+    "created_at": "2026-07-22T06:48:58.869Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 6,
+  "fields": {
+    "title": "Database System Concepts",
+    "author": "Silberschatz",
+    "description": "Comprehensive coverage of database systems, SQL, normalization, transactions, and indexing.",
+    "publisher": "McGraw-Hill Education",
+    "published_year": 2020,
+    "category": 3,
+    "quantity": 8,
+    "available": 7,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA8789.jpg",
+    "created_at": "2026-07-22T06:48:58.874Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 7,
+  "fields": {
+    "title": "Artificial Intelligence: A Modern Approach",
+    "author": "Stuart Russell",
+    "description": "A complete introduction to artificial intelligence including search, reasoning, machine learning, and robotics.",
+    "publisher": "Pearson",
+    "published_year": 2021,
+    "category": 4,
+    "quantity": 4,
+    "available": 4,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA1292.jpg",
+    "created_at": "2026-07-22T06:48:58.877Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 8,
+  "fields": {
+    "title": "Deep Learning",
+    "author": "Ian Goodfellow",
+    "description": "Covers neural networks, deep learning architectures, optimization, and practical AI applications.",
+    "publisher": "MIT Press",
+    "published_year": 2019,
+    "category": 4,
+    "quantity": 5,
+    "available": 5,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA4196.jpg",
+    "created_at": "2026-07-22T06:48:58.879Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 9,
+  "fields": {
+    "title": "Hands-On Machine Learning",
+    "author": "Aurelien Geron",
+    "description": "Learn machine learning with Scikit-Learn, Keras, and TensorFlow using practical examples.",
+    "publisher": "O'Reilly Media",
+    "published_year": 2023,
+    "category": 4,
+    "quantity": 6,
+    "available": 6,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA6803.jpg",
+    "created_at": "2026-07-22T06:48:58.882Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 10,
+  "fields": {
+    "title": "Linear Algebra Done Right",
+    "author": "Sheldon Axler",
+    "description": "A modern approach to linear algebra emphasizing vector spaces and linear transformations.",
+    "publisher": "Springer",
+    "published_year": 2021,
+    "category": 5,
+    "quantity": 9,
+    "available": 9,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA9252.jpg",
+    "created_at": "2026-07-22T06:48:58.885Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 11,
+  "fields": {
+    "title": "Calculus",
+    "author": "James Stewart",
+    "description": "An introductory calculus textbook covering limits, derivatives, integrals, and applications.",
+    "publisher": "Cengage Learning",
+    "published_year": 2018,
+    "category": 5,
+    "quantity": 7,
+    "available": 6,
+    "price": "899.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA2102.jpg",
+    "created_at": "2026-07-22T06:48:58.891Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 12,
+  "fields": {
+    "title": "Physics for Scientists",
+    "author": "Serway",
+    "description": "Fundamental concepts of physics including mechanics, electricity, magnetism, and modern physics.",
+    "publisher": "Pearson",
+    "published_year": 2019,
+    "category": 6,
+    "quantity": 5,
+    "available": 4,
+    "price": "750.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA4639.jpg",
+    "created_at": "2026-07-22T06:48:58.895Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 13,
+  "fields": {
+    "title": "Chemistry",
+    "author": "Raymond Chang",
+    "description": "A comprehensive introduction to chemistry covering atoms, molecules, reactions, and thermodynamics.",
+    "publisher": "McGraw-Hill Education",
+    "published_year": 2020,
+    "category": 6,
+    "quantity": 6,
+    "available": 6,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA8441.jpg",
+    "created_at": "2026-07-22T06:48:58.898Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 14,
+  "fields": {
+    "title": "World History",
+    "author": "Philip Parker",
+    "description": "Explores the major civilizations, cultures, and historical events that shaped the modern world.",
+    "publisher": "Oxford University Press",
+    "published_year": 2021,
+    "category": 7,
+    "quantity": 4,
+    "available": 4,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA9402.jpg",
+    "created_at": "2026-07-22T06:48:58.901Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 15,
+  "fields": {
+    "title": "The Story of Civilization",
+    "author": "Will Durant",
+    "description": "A classic work tracing the development of civilizations from ancient to modern times.",
+    "publisher": "Simon & Schuster",
+    "published_year": 1975,
+    "category": 7,
+    "quantity": 3,
+    "available": 2,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA1866.jpg",
+    "created_at": "2026-07-22T06:48:58.905Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 16,
+  "fields": {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "description": "A bestselling novel about following one's dreams and discovering life's purpose.",
+    "publisher": "HarperCollins",
+    "published_year": 1993,
+    "category": 8,
+    "quantity": 8,
+    "available": 8,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA4630.jpg",
+    "created_at": "2026-07-22T06:48:58.907Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 17,
+  "fields": {
+    "title": "Wizard School - The Philosopher's Stone",
+    "author": "J. K. Rowling",
+    "description": "A magical adventure following a young wizard's first year at a school of magic.",
+    "publisher": "Fantasy House",
+    "published_year": 2001,
+    "category": 8,
+    "quantity": 10,
+    "available": 9,
+    "price": "0.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA8978.jpg",
+    "created_at": "2026-07-22T06:48:58.910Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 18,
+  "fields": {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "description": "A guide to writing clean, maintainable, and professional software.",
+    "publisher": "Pearson",
+    "published_year": 2008,
+    "category": 1,
+    "quantity": 8,
+    "available": 7,
+    "price": "799.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA7300.jpg",
+    "created_at": "2026-07-22T06:48:58.912Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 19,
+  "fields": {
+    "title": "Effective Python",
+    "author": "Brett Slatkin",
+    "description": "59 effective ways to write better, cleaner, and more Pythonic code.",
+    "publisher": "Pearson",
+    "published_year": 2020,
+    "category": 1,
+    "quantity": 6,
+    "available": 3,
+    "price": "699.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA5313.jpg",
+    "created_at": "2026-07-22T06:48:58.913Z"
+  }
+},
+{
+  "model": "libapp.book",
+  "pk": 20,
+  "fields": {
+    "title": "JavaScript: The Good Parts",
+    "author": "Douglas Crockford",
+    "description": "Focuses on the elegant and powerful features of JavaScript for building better applications.",
+    "publisher": "O'Reilly Media",
+    "published_year": 2008,
+    "category": 1,
+    "quantity": 7,
+    "available": 6,
+    "price": "599.00",
+    "status": "Available",
+    "cover": "covers/IMG-20260722-WA2624.jpg",
+    "created_at": "2026-07-22T06:48:58.915Z"
+  }
+}
+]
