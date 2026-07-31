@@ -86,6 +86,8 @@ export default function PaymentSuccess() {
       console.log("Session ID:", session_id);
 
       try {
+        const me = await api.get("/me/");
+        console.log(me.data);
         console.log("Before API call");
 
         const res = await api.post("/payment-success/", {
