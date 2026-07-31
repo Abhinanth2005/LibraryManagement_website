@@ -12,7 +12,7 @@ from .models import Book, Purchase
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-print("Stripe Key Prefix:", settings.STRIPE_SECRET_KEY[:15])
+print(repr(settings.STRIPE_SECRET_KEY))
 print("Key Length:", len(settings.STRIPE_SECRET_KEY))
 
 
