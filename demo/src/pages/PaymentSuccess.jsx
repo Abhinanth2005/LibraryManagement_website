@@ -19,6 +19,8 @@ export default function PaymentSuccess() {
 
     try {
       console.log("Before API call");
+      console.log("Base URL:", import.meta.env.VITE_API_URL);
+      console.log("Full URL:", `${import.meta.env.VITE_API_URL}/payment-success/`);
 
       const response = await api.post("/payment-success/", {
         session_id,
