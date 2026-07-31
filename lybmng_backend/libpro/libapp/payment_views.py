@@ -12,6 +12,9 @@ from .models import Book, Purchase
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+print("Stripe Key Prefix:", settings.STRIPE_SECRET_KEY[:15])
+print("Key Length:", len(settings.STRIPE_SECRET_KEY))
+
 
 @api_view(["POST"])
 # @permission_classes([IsAuthenticated])
@@ -50,9 +53,9 @@ def create_checkout_session(request, book_id):
                 "user_id": str(request.user.id),
             },
 
-            success_url="http://localhost:5173/payment-success?session_id={CHECKOUT_SESSION_ID}",
+            success_url="https://librarymanagement-website.onrender.com/payment-success?session_id={CHECKOUT_SESSION_ID}",
 
-            cancel_url="http://localhost:5173/payment-cancel",
+            cancel_url="https://librarymanagement-website.onrender.com/payment-cancel",
         )
 
         return Response(
