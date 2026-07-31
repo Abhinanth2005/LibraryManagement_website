@@ -77,34 +77,65 @@ export default function PaymentSuccess() {
 
   console.log("✅ PaymentSuccess component rendered");
 
+  // useEffect(() => {
+  //   console.log("✅ useEffect started");
+
+  //   const verifyPayment = async () => {
+  //     const session_id = params.get("session_id");
+
+  //     console.log("Session ID:", session_id);
+
+  //     try {
+  //       const me = await api.get("/me/");
+  //       console.log(me.data);
+  //       console.log("Before API call");
+
+  //       const res = await api.post("/payment-success/", {
+  //         session_id,
+  //       });
+
+  //       console.log("API Response:", res.data);
+
+  //       setTimeout(() => navigate("/activities"), 3000);
+  //     } catch (err) {
+  //       console.error("API Error:", err);
+  //       console.error(err.response);
+  //     }
+  //   };
+
+  //   verifyPayment();
+  // }, [navigate, params]);
+
   useEffect(() => {
-    console.log("✅ useEffect started");
+  console.log("PaymentSuccess mounted");
 
-    const verifyPayment = async () => {
-      const session_id = params.get("session_id");
+  const verifyPayment = async () => {
+    const session_id = params.get("session_id");
 
-      console.log("Session ID:", session_id);
+    console.log("Session ID:", session_id);
+    console.log("API URL:", import.meta.env.VITE_API_URL);
 
-      try {
-        const me = await api.get("/me/");
-        console.log(me.data);
-        console.log("Before API call");
+    try {
+      console.log("Before API");
 
-        const res = await api.post("/payment-success/", {
-          session_id,
-        });
+      const response = await api.post("/payment-success/", {
+        session_id,
+      });
 
-        console.log("API Response:", res.data);
+      console.log("After API");
+      console.log(response.data);
 
-        setTimeout(() => navigate("/activities"), 3000);
-      } catch (err) {
-        console.error("API Error:", err);
-        console.error(err.response);
-      }
-    };
+      navigate("/activities");
 
-    verifyPayment();
-  }, [navigate, params]);
+    } catch (error) {
+      console.log("Inside catch");
+      console.log(error);
+      console.log(error.response);
+    }
+  };
+
+  verifyPayment();
+}, []);
 
   return( <div><h1>Payment Success Page</h1></div>);
 }
