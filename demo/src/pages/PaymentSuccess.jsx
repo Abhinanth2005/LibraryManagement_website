@@ -66,7 +66,7 @@
 //     </div>
 //   );
 // }
-
+console.log("PaymentSuccess mounted");
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../services/api";
