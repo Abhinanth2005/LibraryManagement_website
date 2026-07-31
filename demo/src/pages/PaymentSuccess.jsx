@@ -106,5 +106,5 @@ export default function PaymentSuccess() {
     verifyPayment();
   }, [navigate, params]);
 
-  return <h1>Payment Success Page</h1>;
+  return( <div><h1>Payment Success Page</h1></div>);
 }
