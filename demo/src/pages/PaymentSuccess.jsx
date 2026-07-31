@@ -5,6 +5,9 @@ import api from "../services/api"; // your axios instance
 export default function PaymentSuccess() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  console.log("API URL:", import.meta.env.VITE_API_URL);
+  console.log("Session:", session_id);
+  console.log("PaymentSuccess component rendered");
 
   useEffect(() => {
     const verifyPayment = async () => {

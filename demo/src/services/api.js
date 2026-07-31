@@ -1,5 +1,7 @@
 import axios from "axios";
 
+console.log(import.meta.env.VITE_API_URL);
+
 const api = axios.create({
    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true,
@@ -12,6 +14,8 @@ function getCookie(name) {
         return parts.pop().split(";").shift();
     }
 }
+
+console.log(import.meta.env.VITE_API_URL);
 
 api.interceptors.request.use((config) => {
     config.headers["X-CSRFToken"] = getCookie("csrftoken");
