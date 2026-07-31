@@ -10,32 +10,34 @@ export default function PaymentSuccess() {
   console.log("PaymentSuccess component rendered");
 
   useEffect(() => {
-    const verifyPayment = async () => {
-      try {
-        const session_id = params.get("session_id");
+  console.log("PaymentSuccess mounted");
 
-        await api.post("/payment-success/", {
-          session_id,
-        });
+  const verifyPayment = async () => {
+    const session_id = params.get("session_id");
 
-        setTimeout(() => {
-          navigate("/activities");
-        }, 3000);
+    console.log("Session ID:", session_id);
 
-      } catch (error) {
-        console.error(error);
+    try {
+      console.log("Before API call");
 
-        alert(
-          error.response?.data?.error ||
-          "Unable to verify payment."
-        );
+      const response = await api.post("/payment-success/", {
+        session_id,
+      });
 
-        navigate("/books");
-      }
-    };
+      console.log("API Success:", response.data);
 
-    verifyPayment();
-  }, [navigate, params]);
+      setTimeout(() => {
+        navigate("/activities");
+      }, 3000);
+
+    } catch (error) {
+      console.log("API Error:", error);
+      console.log("Response:", error.response);
+    }
+  };
+
+  verifyPayment();
+}, [navigate, params]);
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
