@@ -75,6 +75,8 @@ def create_checkout_session(request, book_id):
 # @permission_classes([IsAuthenticated])
 def payment_success(request):
 
+    print("========== PAYMENT SUCCESS CALLED ==========")
+
     session_id = request.data.get("session_id")
 
     if not session_id:
