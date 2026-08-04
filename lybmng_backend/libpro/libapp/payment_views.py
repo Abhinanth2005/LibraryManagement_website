@@ -1,7 +1,9 @@
+from requests import session
 import stripe
 
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -17,7 +19,7 @@ print("Key Length:", len(settings.STRIPE_SECRET_KEY))
 
 
 @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def create_checkout_session(request, book_id):
 
     book = get_object_or_404(Book, id=book_id)
@@ -72,7 +74,7 @@ def create_checkout_session(request, book_id):
 
 
 @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def payment_success(request):
 
     print("========== PAYMENT SUCCESS CALLED ==========")
@@ -107,9 +109,14 @@ def payment_success(request):
         book = Book.objects.get(
             id=session.metadata["book_id"]
         )
+        User = get_user_model()
+
+        user = User.objects.get(
+            id=session.metadata["user_id"]
+        )
 
         Purchase.objects.create(
-            user=request.user,
+            user=user,
             book=book,
             amount=book.price,
             stripe_payment_id=payment_id,
