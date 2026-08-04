@@ -19,7 +19,7 @@ print("Key Length:", len(settings.STRIPE_SECRET_KEY))
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def create_checkout_session(request, book_id):
 
     book = get_object_or_404(Book, id=book_id)
