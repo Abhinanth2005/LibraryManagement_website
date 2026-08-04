@@ -31,6 +31,8 @@ def create_checkout_session(request, book_id):
         )
 
     try:
+        print("Logged in user:", request.user)
+        print("User ID:", request.user.id)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
 
@@ -88,6 +90,9 @@ def payment_success(request):
         )
 
     try:
+        print("Stripe Metadata:", session.metadata)
+        print("User ID:", session.metadata.get("user_id"))
+        print("Book ID:", session.metadata.get("book_id"))
 
         session = stripe.checkout.Session.retrieve(session_id)
 
@@ -109,10 +114,14 @@ def payment_success(request):
         book = Book.objects.get(
             id=session.metadata["book_id"]
         )
-       
+        User = get_user_model()
+
+        user = User.objects.get(
+            id=session.metadata["user_id"]
+        )
 
         Purchase.objects.create(
-            user=request.user,
+            user=user,
             book=book,
             amount=book.price,
             stripe_payment_id=payment_id,
