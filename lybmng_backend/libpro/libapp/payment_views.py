@@ -90,11 +90,12 @@ def payment_success(request):
         )
 
     try:
+        
+
+        session = stripe.checkout.Session.retrieve(session_id)
         print("Stripe Metadata:", session.metadata)
         print("User ID:", session.metadata.get("user_id"))
         print("Book ID:", session.metadata.get("book_id"))
-
-        session = stripe.checkout.Session.retrieve(session_id)
 
         if session.payment_status != "paid":
             return Response(
