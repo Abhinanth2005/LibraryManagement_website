@@ -15,9 +15,23 @@ import BookDetails from "./pages/BookDetails";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 
+// const PrivateRoute = ({ children }) => {
+//   const { user } = useAuth();
+//   return user ? children : <Navigate to="/login" />;
+// };
+
 const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
-  return user ? children : <Navigate to="/login" />;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border text-primary"></div>
+      </div>
+    );
+  }
+
+  return user ? children : <Navigate to="/login" replace />;
 };
 
 export default function App() {
