@@ -74,7 +74,7 @@ def create_checkout_session(request, book_id):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def payment_success(request):
 
     print("========== PAYMENT SUCCESS CALLED ==========")
