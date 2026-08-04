@@ -109,14 +109,10 @@ def payment_success(request):
         book = Book.objects.get(
             id=session.metadata["book_id"]
         )
-        User = get_user_model()
-
-        user = User.objects.get(
-            id=session.metadata["user_id"]
-        )
+       
 
         Purchase.objects.create(
-            user=user,
+            user=request.user,
             book=book,
             amount=book.price,
             stripe_payment_id=payment_id,
