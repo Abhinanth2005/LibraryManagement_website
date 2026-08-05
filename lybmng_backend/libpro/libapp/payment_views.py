@@ -18,7 +18,7 @@ print(repr(settings.STRIPE_SECRET_KEY))
 print("Key Length:", len(settings.STRIPE_SECRET_KEY))
 
 
-@api_view(["POST"])
+@api_view(["GET", "POST"])
 # @permission_classes([IsAuthenticated])
 def create_checkout_session(request, book_id):
 
