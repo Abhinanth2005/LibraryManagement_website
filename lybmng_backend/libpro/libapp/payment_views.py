@@ -1,4 +1,4 @@
-from requests import session
+from requests import request, session
 import stripe
 
 from django.conf import settings
@@ -31,7 +31,9 @@ def create_checkout_session(request, book_id):
         )
 
     try:
-        print("Logged in user:", request.user)
+        print("========== CREATE CHECKOUT ==========")
+        print("Authenticated:", request.user.is_authenticated)
+        print("User:", request.user)
         print("User ID:", request.user.id)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
@@ -144,6 +146,7 @@ def payment_success(request):
             {"error": str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
+    
 
 
 @api_view(["GET"])
