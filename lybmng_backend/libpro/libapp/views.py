@@ -379,6 +379,7 @@ def login_view(request):
 
     login(request, user)   # <-- creates session cookie
 
+    from django.middleware.csrf import get_token
 
     return Response(
         {
@@ -388,7 +389,8 @@ def login_view(request):
                 "username": user.username,
                 "email": user.email,
                 "is_superuser": user.is_superuser,
-            }
+            },
+            "csrftoken": get_token(request),
         }
     )
 
@@ -475,16 +477,18 @@ def my_purchased_books(request):
     return Response(serializer.data)
 
 
-
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.middleware.csrf import get_token
 
 @ensure_csrf_cookie
 def current_user(request):
+    csrf_token = get_token(request)
+
     if not request.user.is_authenticated:
         return JsonResponse(
-            {"detail": "Authentication required"},
+            {"detail": "Authentication required", "csrftoken": csrf_token},
             status=401
         )
 
@@ -493,4 +497,5 @@ def current_user(request):
         "username": request.user.username,
         "email": request.user.email,
         "is_superuser": request.user.is_superuser,
+        "csrftoken": csrf_token,
     })
