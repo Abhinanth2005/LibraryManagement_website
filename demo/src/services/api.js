@@ -5,7 +5,6 @@ console.log(import.meta.env.VITE_API_URL);
 const api = axios.create({
    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true,
-
 });
 
 function getCookie(name) {
@@ -24,15 +23,3 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
-
-// import axios from "axios";
-
-// const api = axios.create({
-//   baseURL: import.meta.env.VITE_API_URL,
-//   withCredentials: true,
-
-//   xsrfCookieName: "csrftoken",
-//   xsrfHeaderName: "X-CSRFToken",
-// });
-
-// export default api;
