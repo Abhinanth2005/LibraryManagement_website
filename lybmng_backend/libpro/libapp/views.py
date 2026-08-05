@@ -478,7 +478,9 @@ def my_purchased_books(request):
 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
 
+@ensure_csrf_cookie
 def current_user(request):
     if not request.user.is_authenticated:
         return JsonResponse(
